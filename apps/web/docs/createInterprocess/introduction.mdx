@@ -1,0 +1,70 @@
+---
+title: 👋 Introduction
+order: 1
+---
+
+# Introduction
+**createInterprocess** is a function that creates a new interprocess object to manage IPC handlers.
+
+<br />
+
+## Params
+
+It takes just a single argument, which is an object containing the following properties:
+
+<br />
+
+- **main** - the main process IPC handlers **(optional)**
+- **renderer** - the renderer process IPC handlers **(optional)**
+
+<br />
+
+The `main` and `renderer` properties are both objects, and each of them can contain any number of IPC handlers. The keys of these objects will be used as the names of the IPC channels, and the values are the handlers themselves.
+
+<br />
+
+## Return
+It returns an object with the following properties and methods:
+
+<br />
+
+- **ipcs** - an object containing the IPC handlers
+- **ipcMain** - the main process IPC manager
+- **ipcRenderer** - the renderer process IPC manager
+- **exposeApiToGlobalWindow** - a function that exposes the IPC handlers to the global window object from the preload script
+
+## Example
+```ts
+import { createInterprocess } from 'interprocess'
+
+const ipcs = createInterprocess({
+  main: {
+    async getPing(_, data: 'ping') {
+      const message = `from renderer: ${data} on main process`
+
+      console.log(message)
+
+      return message
+    },
+  },
+
+  renderer: {
+    async getPong(_, data: 'pong') {
+      const message = `from main: ${data} on renderer process`
+
+      console.log(message)
+
+      return message
+    },
+  },
+})
+
+export const {
+  ipcMain,
+  ipcRenderer,
+  exposeApiToGlobalWindow
+} = ipcs
+```
+
+
+

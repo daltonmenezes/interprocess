@@ -1,0 +1,120 @@
+---
+title: Create a interprocess
+order: 3
+---
+
+# Create a interprocess
+
+Let's build something simple that can show you some of the interprocess's power!
+
+<br />
+
+First, create the following folders at `src`:
+
+<br />
+
+- `shared/ipcs` (this folder structure is optional)
+
+<br />
+
+Then, create a file named as `index.ts` in the `ipcs` folder with the following content:
+
+<br />
+
+```ts
+import { createInterprocess } from 'interprocess'
+
+const ipcs = createInterprocess({
+  main: {
+    async getPing(_, data: 'ping') {
+      const message = `from renderer: ${data} on main process`
+
+      console.log(message)
+
+      return message
+    },
+  },
+
+  renderer: {
+    async getPong(_, data: 'pong') {
+      const message = `from main: ${data} on renderer process`
+
+      console.log(message)
+
+      return message
+    },
+  },
+})
+
+export const {
+  ipcMain,
+  ipcRenderer,
+  exposeApiToGlobalWindow
+} = ipcs
+```
+
+<br />
+
+On the main process:
+
+<br />
+
+```ts
+import { BrowserWindow, app } from 'electron'
+import { ipcMain } from 'shared/ipcs'
+
+app.whenReady().then(() => {
+  const mainWindow = new BrowserWindow({
+    webPreferences: {
+      preload: path.join(__dirname, '../preload/index.js'),
+      sandbox: false,
+    },
+  })
+
+  ipcMain.handle.getPing()
+
+  mainWindow.on('ready-to-show', () => {
+    ipcMain.invoke.getPong(mainWindow, 'pong')
+  })
+})
+```
+
+<br />
+
+In the preload script:
+
+<br />
+
+```ts
+import { exposeApiToGlobalWindow } from 'shared/ipcs'
+
+declare global {
+  interface Window {
+    [key]: typeof api
+  }
+}
+
+const { key, api } = exposeApiToGlobalWindow({
+  exposeAll: true, // expose handlers and invokers,
+})
+```
+
+<br />
+
+On the renderer process:
+
+<br />
+
+```ts
+const { invoke, handle } = window.api
+
+invoke.getPing('ping')
+handle.getPong()
+```
+<br />
+
+This is a simple way to work with interprocess, but there's a lot of more cool features you can take advantage, like `overrides`, `code splitting`, `invoker's response` (for renderer and main process 🎉) and more. Keep reading the docs to get the knowledge to masterize interprocess!
+
+<br />
+
+Also, you can take a look [this example](https://github.com/daltonmenezes/interprocess/tree/main/apps/desktop)

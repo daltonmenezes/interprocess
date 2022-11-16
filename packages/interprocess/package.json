@@ -1,0 +1,62 @@
+{
+  "name": "interprocess",
+  "version": "0.2.0",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/index.d.ts",
+  "description": "A scalable and type-safe Electron IPC management tool with enhanced DX",
+  "author": {
+    "name": "Dalton Menezes",
+    "email": "daltonmenezes@outlook.com",
+    "url": "https://daltonmenezes.github.io"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/daltonmenezes/interprocess.git"
+  },
+  "bugs": {
+    "url": "https://github.com/daltonmenezes/interprocess/issues"
+  },
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "predev": "tsc",
+    "dev": "rollup -c -w",
+    "prebuild": "tsc",
+    "build": "rollup -c",
+    "prepack": "cp ../../README.md ./README.md"
+  },
+  "devDependencies": {
+    "@daltonmenezes/eslint-config": "*",
+    "@daltonmenezes/ts-config": "*",
+    "@rollup/plugin-commonjs": "^22.0.2",
+    "@rollup/plugin-node-resolve": "^14.1.0",
+    "@types/node": "^18.7.18",
+    "esbuild": "^0.15.8",
+    "rollup": "^2.79.0",
+    "rollup-plugin-dts": "^4.2.2",
+    "rollup-plugin-esbuild": "^4.10.1",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "tslib": "^2.4.0",
+    "typescript": "^4.8.3",
+    "electron": "latest"
+  },
+  "peerDependencies": {
+    "electron": ">=8.0"
+  },
+  "keywords": [
+    "electron",
+    "ipc",
+    "interprocess",
+    "communication",
+    "type-safe"
+  ],
+  "eslintIgnore": [
+    "out"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

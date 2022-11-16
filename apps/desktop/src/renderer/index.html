@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interprocess</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      font-family: Arial, serif;
+      justify-content: center;
+      min-height: 100vh;
+      align-items: center;
+      background-color: #101010;
+      color: #ff7ac8;
+      background-size: 200%;
+      background-image: url('../../../web/public/background.svg');
+    }
+
+    button {
+      background-color: #101010;
+      color: rgba(255, 255, 255, 0.87);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      border: 1px solid rgba(36, 36, 36, 0.547);
+      box-shadow: 0 2px 2px 1px #00000047;
+    }
+
+    button:hover {
+      background-color: #ff7ac8;
+      color: #101010;
+    }
+
+    button:active {
+      background-color: #b85a91;
+      color: #101010;
+      transform: scale(0.98);
+    }
+
+    app {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      min-width: 100%;
+      min-height: 100vh;
+      background-color: #0000004d;
+      backdrop-filter: blur(2px);
+    }
+
+    h1 {
+      background-image: -webkit-linear-gradient(0deg, #ff7ac8 0%, #50e1c7 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      text-fill-color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+<body>
+  <app>
+    <h1>Interprocess</h1>
+
+    <button id="btn">Send Ping!</button>
+
+    <p id="message"></p>
+  </app>
+
+  <script type="module" src="./index.ts"></script>
+</body>
+</html>

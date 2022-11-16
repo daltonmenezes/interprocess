@@ -1,0 +1,14 @@
+{
+  "extends": "@daltonmenezes/ts-config/base.json",
+  "include": [
+    "index.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "compilerOptions": {
+    "module": "esnext",
+    "jsx": "preserve",
+    "noEmit": true,
+    "baseUrl": "./src"
+  }
+}

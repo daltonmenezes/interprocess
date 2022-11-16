@@ -1,0 +1,41 @@
+---
+title: createIpcSlice
+---
+
+# createIpcSlice
+A function that creates a slice of IPCs to be used by `combineIpcs`.
+
+### Example
+`shared/ipcs/main/index.ts`
+
+<br />
+
+```ts
+import { createIpcSlice } from 'interprocess'
+
+export const getPingIpcSlice = createIpcSlice({
+  main: {
+    async getPing(_, data: 'ping') {
+      return `from renderer: ${data} on main process`
+    },
+  },
+})
+```
+
+<br />
+
+`shared/ipcs/renderer/index.ts`
+
+<br />
+
+```ts
+import { createIpcSlice } from 'interprocess'
+
+export const getPongIpcSlice = createIpcSlice({
+  renderer: {
+    async getPong(_, data: 'pong') {
+      return `from main: ${data} on renderer process`
+    },
+  },
+})
+```

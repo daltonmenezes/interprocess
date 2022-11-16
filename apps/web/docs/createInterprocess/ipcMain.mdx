@@ -1,0 +1,71 @@
+---
+title: ipcMain
+---
+
+# ipcMain
+An object that carries `handle`, `invoke` and `remove` methods to manage the asynchronous communication from the main process to renderer processes.
+
+<br />
+
+
+### ipcMain.handle[channel / handler name]
+
+Register the IPC handler for the given channel. The handler will be called whenever the `ipcRenderer.invoke` method is called with the same channel.
+
+<br />
+
+It can be simply used as the following example:
+
+<br />
+
+```ts
+ipcMain.handle.getPing()
+```
+
+<br />
+
+Where `getPing` is the name of the channel (handler) registered in the `createInterprocess` or `createIpcSlice` function.
+
+<br />
+
+Also, you can pass a callback function to handle the request from the renderer process if you need to do something before sending the response:
+
+<br />
+```ts
+  ipcMain.handle.getPing(async (_, { getPing, data }) => {
+    // call the registered handler if needed
+    const response = await getPing(_, data)
+
+    await ipcMain.invoke.getPong(mainWindow, 'pong')
+
+    ipcMain.remove.getPing()
+
+    return 'The getPong ipc was removed'
+  })
+```
+
+<br />
+
+### ipcMain.invoke[channel / handler name]
+
+Send a message to the renderer process and wait for the response if needed:
+
+<br />
+
+```ts
+const response = await ipcMain.invoke.getPong(mainWindow, 'pong')
+
+console.log(response)
+```
+
+<br />
+
+### ipcMain.remove[channel / handler name]
+
+Remove the listener from the main process:
+
+<br />
+
+```ts
+ipcMain.remove.getPing()
+```

@@ -1,0 +1,14 @@
+{
+  "extends": "@daltonmenezes/ts-config/base.json",
+  "include": [
+    "src",
+    "index.d.ts",
+    "./node_modules/electron/electron.d.ts",
+  ],
+  "compilerOptions": {
+    "declaration": true,
+    "declarationDir": "dist/esm",
+    "emitDeclarationOnly": true,
+    "outDir": "dist/esm",
+  }
+}

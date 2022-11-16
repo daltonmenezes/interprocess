@@ -1,0 +1,23 @@
+---
+title: combineIpcs
+---
+
+# combineIpcs
+A function to combine IPCs from different sources created using `createIpcSlice`.
+
+This function replaces the `createInterprocess`!
+
+### Example
+```ts
+import { combineIpcs } from 'interprocess'
+
+import { getPongIpcSlice } from './renderer'
+import { getPingIpcSlice } from './main'
+
+const combinedIpcs = combineIpcs(
+  getPongIpcSlice,
+  getPingIpcSlice
+)
+
+export const { ipcMain, ipcRenderer, exposeApiToGlobalWindow } = combinedIpcs
+```

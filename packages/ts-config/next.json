@@ -1,0 +1,13 @@
+{
+  "extends": "./base.json",
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "compilerOptions": {
+    "module": "esnext",
+    "jsx": "preserve",
+    "noEmit": true
+  }
+}

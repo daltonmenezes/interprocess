@@ -1,0 +1,67 @@
+---
+title: exposeApiToGlobalWindow
+---
+
+# exposeApiToGlobalWindow
+A function that exposes the IPC handlers to the global window object from the preload script
+
+<br />
+
+## Params
+
+It takes a single object as a parameter with the following properties:
+
+<br />
+
+- **apiKey** - the api key that will be used to access the IPC handlers from the global window object **(optional)**
+- **exposeAll** - a boolean that determines whether all the IPC handlers will be exposed to the global window object **(optional)**. When set to true, invoke, handle and remove handlers will be exposed!
+- **append** - an object that take any property and value that will be appended to the global window object **(optional)**
+- **override** - a method that will override all the initial exposed IPC handler entries and lets you manage what will be exposed manually **(optional)**
+
+<br />
+
+## Default
+```ts
+apiKey: 'api'
+exposeAll: false // only invoke handlers is exposed
+append: {}
+override: null
+```
+
+<br />
+
+## Return
+
+- **key** - the api key that will be used to access the IPC handlers from the global window object
+- **api** - an object that contains all the exposed IPC handlers
+
+<br />
+
+## Example
+```ts
+import { exposeApiToGlobalWindow } from 'shared/ipcs'
+
+declare global {
+  interface Window {
+    [key]: typeof api
+  }
+}
+
+const { key, api } = exposeApiToGlobalWindow({
+  override(ipcs) {
+    return {
+      removePong() {
+        ipcs.remove.getPong()
+      },
+    }
+  },
+
+  append: {
+    appName: 'Electron App',
+
+    sayHello() {
+      return 'Hello World'
+    },
+  } as const,
+})
+```

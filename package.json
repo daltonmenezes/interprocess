@@ -1,0 +1,41 @@
+{
+  "name": "interprocess",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "prepare": "husky install",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "turbo run build --filter=!web --filter=!desktop && changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.25.0",
+    "@commitlint/cli": "latest",
+    "@commitlint/config-conventional": "latest",
+    "husky": "latest",
+    "lint-staged": "latest",
+    "prettier": "latest",
+    "turbo": "latest"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {},
+  "packageManager": "yarn@1.22.19",
+  "lint-staged": {
+    "./apps/**/*.{js,ts,jsx,tsx}": [
+      "eslint --fix"
+    ],
+    "./packages/interprocess/**/*.{js,ts,jsx,tsx}": [
+      "eslint --fix"
+    ]
+  }
+}

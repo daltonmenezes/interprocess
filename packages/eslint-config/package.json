@@ -1,0 +1,19 @@
+{
+  "private": true,
+  "name": "@daltonmenezes/eslint-config",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "files": [
+    "index.js"
+  ],
+  "devDependencies": {
+    "eslint": "latest",
+    "prettier": "latest",
+    "@typescript-eslint/eslint-plugin": "latest",
+    "@typescript-eslint/parser": "latest",
+    "eslint-config-prettier": "latest",
+    "eslint-plugin-node": "latest",
+    "eslint-plugin-prettier": "latest"
+  }
+}
