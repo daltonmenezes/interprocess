@@ -48,7 +48,7 @@ export const Sidebar = styled('aside', {
   flexDirection: 'column',
   flex: 1,
   width: '100%',
-  maxWidth: '220px',
+  maxWidth: '84%',
   height: '-webkit-fill-available',
   overflowY: 'auto',
   padding: '1.5rem',
@@ -89,13 +89,21 @@ export const Sidebar = styled('aside', {
 
       span: {
         textTransform: 'capitalize',
-        fontSize: '1.2rem',
+        fontSize: '1.1rem',
         fontWeight: 700,
         color: '$accent-secondary',
+
+        '@bp4': {
+          fontSize: '1.2rem',
+        },
       },
 
       a: {
         transition: 'all 0.2s ease-in-out',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
+        maxWidth: '100%',
       },
 
       '&:has(span) a': {
@@ -128,6 +136,7 @@ export const Sidebar = styled('aside', {
     position: 'relative',
     height: 'auto',
     zIndex: 0,
+    maxWidth: '220px',
 
     borderTopLeftRadius: 15,
     borderTopRightRadius: 0,
