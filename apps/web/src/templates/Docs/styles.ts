@@ -10,6 +10,7 @@ export const Section = styled('section', {
   height: '100%',
   width: '100%',
   paddingBottom: '1.5rem',
+  paddingTop: '3.7rem',
 
   pre: {
     fontFamily: 'inherit',
@@ -17,6 +18,10 @@ export const Section = styled('section', {
     textAlign: 'left',
     width: '100%',
     color: '$accent-secondary',
+  },
+
+  '@bp4': {
+    paddingTop: 0,
   },
 })
 
