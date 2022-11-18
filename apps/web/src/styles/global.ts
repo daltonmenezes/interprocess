@@ -1,4 +1,3 @@
-import { getPublicPath } from 'shared/utils'
 import { globalCss, animations } from '.'
 
 globalCss({
@@ -81,19 +80,7 @@ globalCss({
     minWidth: '100vw',
     minHeight: '100vh',
     backgroundColor: '#000000',
-    backgroundImage: `url("${getPublicPath('/background.svg')}")`,
-    willChange: 'background-size',
-    backgroundAttachment: 'fixed',
-    animation: `${animations.fadeIn} 1s ease`,
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: '300%',
-    backgroundPosition: 'center center',
     overflowX: 'hidden',
-
-    '@bp4': {
-      backgroundAttachment: 'unset',
-      animation: `${animations.background} 1s ease forwards`,
-    },
   },
 
   '::-webkit-scrollbar': {

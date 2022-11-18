@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import * as RadixDialog from '@radix-ui/react-dialog'
 import { useExitIntent } from 'use-exit-intent'
 
-import { RootContainer, Footer, ExitIntentModal } from 'components'
+import { RootContainer, Footer, ExitIntentModal, Background } from 'components'
 import { useDisclosure } from 'hooks'
 
 import type { AppProps } from 'next/app'
@@ -48,6 +48,8 @@ export default function MyApp({ Component, pageProps, router }: AppProps) {
           </RadixDialog.Root>
         </motion.div>
       </AnimatePresence>
+
+      <Background />
     </RootContainer>
   )
 }
