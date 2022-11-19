@@ -17,16 +17,30 @@ export function createApiToGlobalWindowExposer<Handle, Invoke, Remove>(
   >(props: APIConfig = defaultAPIConfig as unknown as APIConfig) {
     const { apiKey, exposeAll, append } = Object.assign(defaultAPIConfig, props)
 
-    const defaultAPI = Object.assign({ invoke: rendererInvoke }, append)
+    const defaultAPI = { invoke: rendererInvoke, ...append }
 
-    const allAPIs = Object.assign(defaultAPI, {
+    const restrictedAPIs = {
       handle: rendererHandle,
       remove: rendererRemove,
-    })
+    }
+
+    const allAPIs = { ...restrictedAPIs, ...defaultAPI }
+
+    const allApisWithoutAppend = {
+      ...restrictedAPIs,
+      invoke: rendererInvoke,
+    }
 
     const api = exposeAll ? allAPIs : defaultAPI
 
-    contextBridge.exposeInMainWorld(apiKey || defaultAPIConfig.apiKey, api)
+    const publicApi = props.override
+      ? { ...props.override(allApisWithoutAppend), ...append }
+      : api
+
+    contextBridge.exposeInMainWorld(
+      apiKey || defaultAPIConfig.apiKey,
+      publicApi
+    )
 
     const key = apiKey as StringAssertion<
       APIConfig['apiKey'],
@@ -41,7 +55,7 @@ export function createApiToGlobalWindowExposer<Handle, Invoke, Remove>(
 
     return {
       key,
-      api: (props.override ? props.override(allAPIs) : api) as APIReturn,
+      api: publicApi as APIReturn & typeof append,
     }
   }
 
