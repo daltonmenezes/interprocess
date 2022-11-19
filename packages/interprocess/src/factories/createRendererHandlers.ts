@@ -29,20 +29,23 @@ export function createRendererHandlers<T extends IPCFactoryProps<T>>(props: T) {
       [key]: async (
         listener?: RendererHandler<typeof key, Renderer[typeof key]>
       ) => {
-        const ProvidedHandler = props['renderer']![key]
-
-        if (!listener && ProvidedHandler) {
-          return ipcRenderer.on(key as string, ProvidedHandler)
-        }
+        const registeredHandler = props['renderer']![key]
+        const providedHandler = listener as any
 
         return ipcRenderer.on(key as string, async function (_, ...args) {
-          const handler = listener as any
+          let response
 
-          const response = await handler(
-            _,
-            { [key]: ProvidedHandler, data: args[0] },
-            ...args
-          )
+          if (providedHandler) {
+            response = await providedHandler(
+              _,
+              { [key]: registeredHandler, data: args[0] },
+              ...args
+            )
+          }
+
+          if (!providedHandler && registeredHandler) {
+            response = await registeredHandler(_, args[0])
+          }
 
           _.sender.send(key as string, response)
         })

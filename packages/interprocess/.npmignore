@@ -6,3 +6,5 @@ tsconfig.json
 commitlint.config.js
 rollup.config.js
 /.husky
+.turbo
+.CHANGELOG.md
