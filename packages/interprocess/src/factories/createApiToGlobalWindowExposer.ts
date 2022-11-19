@@ -1,6 +1,6 @@
 import { contextBridge } from 'electron'
 
-import type { API, StringAssertion } from '../types'
+import type { API } from '../types'
 
 const defaultAPIConfig = {
   apiKey: 'api',
@@ -42,10 +42,9 @@ export function createApiToGlobalWindowExposer<Handle, Invoke, Remove>(
       publicApi
     )
 
-    const key = apiKey as StringAssertion<
-      APIConfig['apiKey'],
-      typeof defaultAPIConfig.apiKey
-    >
+    const key = apiKey as APIConfig['apiKey'] extends string
+      ? APIConfig['apiKey']
+      : typeof defaultAPIConfig.apiKey
 
     type APIReturn = APIConfig['override'] extends Function
       ? ReturnType<APIConfig['override']>
