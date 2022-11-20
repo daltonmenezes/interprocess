@@ -3,9 +3,13 @@ title: combineIpcs
 ---
 
 # combineIpcs
-A function to combine IPCs from different sources created using `createIpcSlice`.
+A function to combine IPCs from different sources created using `createIpcSlice` function.
 
-This function replaces the `createInterprocess`!
+<br />
+
+`combineIpcs` replaces the `createInterprocess` function!
+
+<br />
 
 ### Example
 ```ts
@@ -14,10 +18,9 @@ import { combineIpcs } from 'interprocess'
 import { getPongIpcSlice } from './renderer'
 import { getPingIpcSlice } from './main'
 
-const combinedIpcs = combineIpcs(
-  getPongIpcSlice,
-  getPingIpcSlice
-)
-
-export const { ipcMain, ipcRenderer, exposeApiToGlobalWindow } = combinedIpcs
+export const { ipcMain, ipcRenderer, exposeApiToGlobalWindow } =
+  combineIpcs(
+    getPongIpcSlice,
+    getPingIpcSlice
+  )
 ```

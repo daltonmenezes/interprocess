@@ -58,64 +58,62 @@ Then, create a file named as `index.ts` in the `ipcs` folder with the following 
 ```ts
 import { createInterprocess } from 'interprocess'
 
-const ipcs = createInterprocess({
-  main: {
-    async getPing(_, data: 'ping') {
-      const message = `from renderer: ${data} on main process`
-      
-      console.log(message)
+export const { ipcMain, ipcRenderer, exposeApiToGlobalWindow } =
+  createInterprocess({
+    main: {
+      async getPing(_, data: 'ping') {
+        const message = `from renderer: ${data} on main process`
+        
+        console.log(message)
 
-      return message
+        return message
+      },
     },
-  },
 
-  renderer: {
-    async getPong(_, data: 'pong') {
-      const message = `from main: ${data} on renderer process`
-      
-      console.log(message)
+    renderer: {
+      async getPong(_, data: 'pong') {
+        const message = `from main: ${data} on renderer process`
+        
+        console.log(message)
 
-      return message
+        return message
+      },
     },
-  },
-})
-
-export const {
-  ipcMain,
-  ipcRenderer,
-  exposeApiToGlobalWindow
-} = ipcs
+  })
 ```
 
-On the main process:
+On the **main process**:
 
 ```ts
 import { BrowserWindow, app } from 'electron'
+
 import { ipcMain } from 'shared/ipcs'
+
+const { handle, invoke } = ipcMain
 
 app.whenReady().then(() => {
   const mainWindow = new BrowserWindow({
     webPreferences: {
       preload: path.join(__dirname, '../preload/index.js'),
-      sandbox: false,
+      sandbox: false, // sandbox must be false
     },
   })
 
-  ipcMain.handle.getPing()
+  handle.getPing()
 
-  mainWindow.on('ready-to-show', () => {
-    ipcMain.invoke.getPong(mainWindow, 'pong')
+  mainWindow.webContents.on('dom-ready', () => {
+    invoke.getPong(mainWindow, 'pong')
   })
 })
 ```
 
-In the preload script:
+In the **preload script**:
 
 ```ts
 import { exposeApiToGlobalWindow } from 'shared/ipcs'
 
 const { key, api } = exposeApiToGlobalWindow({
-  exposeAll: true, // expose handlers, invokers and removers,
+  exposeAll: true, // expose handlers, invokers and removers
 })
 
 declare global {
@@ -124,7 +122,9 @@ declare global {
   }
 }
 ```
-On the renderer process:
+
+On the **renderer process**:
+
 ```ts
 const { invoke, handle } = window.api
 

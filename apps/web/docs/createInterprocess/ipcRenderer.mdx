@@ -3,10 +3,9 @@ title: ipcRenderer
 ---
 
 # ipcRenderer
-An object that carries `handle`, `invoke` and `remove` methods to manage the asynchronous communication from the renderer process to main processes.
+An object that carries `handle`, `invoke` and `remove` methods to manage the asynchronous communication from the renderer to main process.
 
 <br />
-
 
 ### ipcRenderer.handle[channel / handler name]
 
@@ -26,13 +25,14 @@ handle.getPing()
 
 <br />
 
-Where `getPing` is the name of the channel (handler) registered in the `createInterprocess` or `createIpcSlice` function.
+Where `getPing` is the name of the channel (handler) registered in the `createInterprocess` or `createIpcSlice` functions.
 
 <br />
 
 Also, you can pass a callback function to handle the request from the main process if you need to do something before sending the response:
 
 <br />
+
 ```ts
 const { handle, remove, invoke } = window.api
 
