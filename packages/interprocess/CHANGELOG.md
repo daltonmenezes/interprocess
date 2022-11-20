@@ -1,5 +1,12 @@
 # interprocess
 
+## 0.2.3
+
+### Patch Changes
+
+- fix an issue where renderer ipc invoked with no args doesn't responde to main back
+  update readme examples
+
 ## 0.2.2
 
 ### Patch Changes
