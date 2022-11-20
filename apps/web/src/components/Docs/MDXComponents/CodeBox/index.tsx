@@ -5,7 +5,7 @@ import { queueTimeouts } from 'shared/utils'
 
 import { CheckmarkIcon, ClipboardIcon, Spinner } from 'components'
 
-import { Box, Button } from './styles'
+import { Button } from './styles'
 import { codeTheme } from 'styles'
 
 const clipboardStateIcons = {
@@ -40,8 +40,13 @@ export function CodeBox(props: any) {
   }
 
   return (
-    <Box>
-      <SyntaxHighlighter language="tsx" style={codeTheme} {...props} />
+    <>
+      <SyntaxHighlighter
+        language="ts"
+        style={codeTheme}
+        PreTag={({ children }) => <pre>{children}</pre>}
+        {...props}
+      />
 
       <Button
         onClick={copyToClipboard}
@@ -50,6 +55,6 @@ export function CodeBox(props: any) {
       >
         {clipboardStateIcons[clipboardState]()}
       </Button>
-    </Box>
+    </>
   )
 }

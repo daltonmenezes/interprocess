@@ -13,8 +13,6 @@ export const Title = styled('h1', {
   '-webkit-text-fill-color': 'transparent',
   textTransform: 'capitalize',
 
-  userSelect: 'none',
-
   '@bp4': {
     fontSize: '4rem',
     letterSpacing: 5,

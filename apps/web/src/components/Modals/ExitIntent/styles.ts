@@ -199,6 +199,8 @@ export const Image = styled('div', {
 
   backgroundImage: `url("${getPublicPath('/abstract-background.jpg')}")`,
   backgroundPosition: 'center center',
+  willChange: 'background',
+  '-webkit-transform': 'translate3d(0)',
   animation: `${animations.backgroundCover} 40s linear infinite alternate`,
 
   '@bp4': {

@@ -1,7 +1,7 @@
 import { BoxStyles } from '../Box'
 import { styled } from 'styles'
 
-export const Button = styled('button', {
+export const ButtonStyles = {
   ...BoxStyles,
 
   display: 'flex',
@@ -14,12 +14,21 @@ export const Button = styled('button', {
 
   transition: 'all 0.2s ease',
 
+  '&:disabled': {
+    opacity: 0.4,
+    pointerEvents: 'none',
+  },
+
   variants: {
     variant: {
       primary: {
         '&:hover': {
+          color: '$shape-primary',
           background: '$accent-primary',
-          color: '$text-base',
+
+          'svg > *': {
+            fill: '$shape-primary',
+          },
         },
 
         '&:active': {
@@ -29,8 +38,12 @@ export const Button = styled('button', {
 
       secondary: {
         '&:hover': {
+          color: '$shape-primary',
           backgroundColor: '$accent-secondary',
-          color: 'black',
+
+          'svg > *': {
+            fill: '$shape-primary',
+          },
         },
       },
 
@@ -67,4 +80,6 @@ export const Button = styled('button', {
   defaultVariants: {
     variant: 'primary',
   },
-})
+}
+
+export const Button = styled('button', ButtonStyles)

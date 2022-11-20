@@ -13,12 +13,7 @@ export const createKeyframes = (keyframes: typeof Keyframes) => ({
 
   background: keyframes({
     '0%': {
-      opacity: 0,
       backgroundPosition: 'bottom center',
-    },
-
-    '10%': {
-      opacity: 1,
     },
 
     '100%': {

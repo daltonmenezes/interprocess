@@ -20,6 +20,7 @@ export const { styled, css, globalCss, getCssText, keyframes, theme, config } =
         'accent-secondary': '#50e1c7',
         'border-primary': 'rgba(36, 36, 36, 0.547)',
         'shadow-primary': '#00000047',
+        'shadow-secondary': 'rgba(0, 0, 0, 0.5)',
 
         'text-gradient':
           '-webkit-linear-gradient(0deg, $accent-primary 0%, $accent-secondary 100%)',

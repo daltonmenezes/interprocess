@@ -225,7 +225,7 @@ export function createCodeTheme({
     },
 
     string: {
-      color: secondary,
+      color: '#77bddf',
     },
 
     symbol: {

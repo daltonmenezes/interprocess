@@ -5,7 +5,7 @@ import { BoxStyles } from '../Box'
 export const Description = styled('p', {
   gap: '0.5rem',
   color: '$text-support',
-  textAlign: 'left',
+  textAlign: 'center',
 
   img: {
     display: 'inline-flex',

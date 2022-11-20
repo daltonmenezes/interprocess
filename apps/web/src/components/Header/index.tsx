@@ -32,7 +32,7 @@ export function Header() {
           </Link>
 
           <ExternalLink href={library.url}>
-            <GitHubIcon></GitHubIcon>
+            <GitHubIcon />
           </ExternalLink>
         </FixedHeader>
       </LayoutSpacing>
@@ -50,7 +50,7 @@ export function Header() {
 
       <InstallationBox />
 
-      <LayoutSpacing size="medium" />
+      <LayoutSpacing size="small" />
     </Layout>
   )
 }

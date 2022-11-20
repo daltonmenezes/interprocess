@@ -8,7 +8,7 @@ export const Background = styled('div', {
   width: '100%',
   height: '100%',
   backgroundImage: `url("${getPublicPath('/background.svg')}")`,
-  willChange: 'background-size background-position',
+  willChange: 'background',
   backgroundRepeat: 'no-repeat',
   backgroundSize: '300%',
   backgroundPosition: 'top center',

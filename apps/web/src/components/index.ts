@@ -1,3 +1,4 @@
+export * from './CodeEditorPresenter'
 export * from './InstallationBox'
 export * from './LibraryVersion'
 export * from './ExternalLink'
