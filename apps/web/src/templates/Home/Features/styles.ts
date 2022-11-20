@@ -41,7 +41,7 @@ export const Description = styled('p', {
   },
 })
 
-export const FeatureCard = styled('li', {
+export const FeatureCard = styled('div', {
   ...BoxStyles,
 
   flexDirection: 'column',

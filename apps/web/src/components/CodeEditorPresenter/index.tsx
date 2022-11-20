@@ -136,10 +136,10 @@ export function CodeEditorPresenterSection() {
                   onClick={() => setActiveTab(index)}
                   active={Boolean(activeTab === index)}
                 >
-                  <FileIcon /> {fileName}
+                  <FileIcon aria-hidden /> {fileName}
                 </TabButton>
 
-                {index !== tabsData.length - 1 && <Separator />}
+                {index !== tabsData.length - 1 && <Separator aria-hidden />}
               </React.Fragment>
             ))}
           </ul>

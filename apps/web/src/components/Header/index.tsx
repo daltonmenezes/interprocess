@@ -31,8 +31,11 @@ export function Header() {
             <a>Install</a>
           </Link>
 
-          <ExternalLink href={library.url}>
-            <GitHubIcon />
+          <ExternalLink
+            href={library.url}
+            title="Go to interprocess GitHub repository"
+          >
+            <GitHubIcon aria-hidden />
           </ExternalLink>
         </FixedHeader>
       </LayoutSpacing>
@@ -42,7 +45,13 @@ export function Header() {
       <Title>interprocess</Title>
 
       <Description>
-        <img src={getPublicPath('/bidirectional-arrows.svg')} alt="" />{' '}
+        <img
+          src={getPublicPath('/bidirectional-arrows.svg')}
+          alt=""
+          width="19"
+          height="19"
+          aria-hidden
+        />{' '}
         {library.description}
       </Description>
 

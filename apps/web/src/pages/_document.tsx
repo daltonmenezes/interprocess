@@ -6,7 +6,7 @@ import { getCssText } from 'styles'
 export default class CustomDocument extends Document {
   render() {
     return (
-      <Html>
+      <Html lang="en">
         <Head>
           <meta name="theme-color" content="#121214" />
 

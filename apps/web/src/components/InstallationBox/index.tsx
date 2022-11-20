@@ -63,7 +63,7 @@ export function InstallationBox() {
           </PackageButton>
         </li>
 
-        <Separator />
+        <Separator aria-hidden />
 
         <li>
           <PackageButton
