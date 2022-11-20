@@ -99,7 +99,7 @@ export function CodeEditorPresenterSection() {
 
         <ExternalLink
           title="See an advanced example on CodeSandbox"
-          href="https://codesandbox.io/s/advanced-4qh0xb?file=/src/ipcs.ts"
+          href="https://codesandbox.io/s/advanced-4qh0xb?file=/src/ipcs/index.ts"
         >
           <CodeSandboxIcon />
           Advanced

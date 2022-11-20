@@ -114,15 +114,15 @@ In the preload script:
 ```ts
 import { exposeApiToGlobalWindow } from 'shared/ipcs'
 
+const { key, api } = exposeApiToGlobalWindow({
+  exposeAll: true, // expose handlers, invokers and removers,
+})
+
 declare global {
   interface Window {
     [key]: typeof api
   }
 }
-
-const { key, api } = exposeApiToGlobalWindow({
-  exposeAll: true, // expose handlers and invokers,
-})
 ```
 On the renderer process:
 ```ts
@@ -135,7 +135,11 @@ This is a simple way to work with interprocess, but there's a lot of more cool f
 
 # 💬 Knowledge
 - [Docs](https://daltonmenezes.github.io/interprocess/docs/getting-started/overview)
-- [Example (in-depth)](https://github.com/daltonmenezes/interprocess/tree/main/apps/desktop)
+
+- Examples
+  - [Executable](https://github.com/daltonmenezes/interprocess/tree/main/apps/desktop)
+  - [CodeSandbox (simple)](https://codesandbox.io/s/simple-607b6h?file=/src/ipcs.ts)
+  - [CodeSandbox (advanced)](https://codesandbox.io/s/advanced-4qh0xb?file=/src/ipcs/index.ts)
 
 
 # 💬 Contributing

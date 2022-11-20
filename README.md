@@ -139,7 +139,7 @@ This is a simple way to work with interprocess, but there's a lot of more cool f
 - Examples
   - [Executable](https://github.com/daltonmenezes/interprocess/tree/main/apps/desktop)
   - [CodeSandbox (simple)](https://codesandbox.io/s/simple-607b6h?file=/src/ipcs.ts)
-  - [CodeSandbox (advanced)](https://codesandbox.io/s/advanced-4qh0xb?file=/src/ipcs.ts)
+  - [CodeSandbox (advanced)](https://codesandbox.io/s/advanced-4qh0xb?file=/src/ipcs/index.ts)
 
 
 # 💬 Contributing
