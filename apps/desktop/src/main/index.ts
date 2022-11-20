@@ -16,7 +16,7 @@ function createMainWindow() {
 
     webPreferences: {
       preload: path.join(__dirname, '../preload/index.js'),
-      sandbox: false,
+      sandbox: false, // sandbox must be false
     },
   })
 
