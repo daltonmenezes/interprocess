@@ -18,7 +18,7 @@ export function createRendererInvokers<T extends IPCFactoryProps<T>>(props: T) {
     [Property in MainKeys]: (
       arg: Parameters<Main[Property]>[1],
       ...restOfArgs: any[]
-    ) => Promise<ReturnType<Main[Property]>>
+    ) => ReturnType<Main[Property]>
   }
 
   return invokers

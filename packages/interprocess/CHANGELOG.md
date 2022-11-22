@@ -1,5 +1,11 @@
 # interprocess
 
+## 0.2.4
+
+### Patch Changes
+
+- fix invokers return type where promise return type was duplicated
+
 ## 0.2.3
 
 ### Patch Changes

@@ -38,7 +38,7 @@ export function createMainInvokers<T extends IPCFactoryProps<T>>(props: T) {
       window: BrowserWindow,
       arg: Parameters<Renderer[Property]>[1],
       ...restOfArgs: any[]
-    ) => Promise<ReturnType<Renderer[Property]>>
+    ) => ReturnType<Renderer[Property]>
   }
 
   return invokers
