@@ -31,7 +31,6 @@ export default function MyApp({ Component, pageProps, router }: AppProps) {
           initial="hidden"
           animate="enter"
           exit="exit"
-          transition={{ type: 'linear', opacity: { duration: 0.5 } }}
           variants={{
             hidden: { opacity: 0 },
             enter: { opacity: 1 },
