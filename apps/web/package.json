@@ -30,7 +30,7 @@
     "remark-frontmatter": "^4.0.1",
     "remark-gfm": "^3.0.1",
     "turbo": "1.5.6",
-    "use-exit-intent": "latest",
+    "use-exit-intent": "^1.0.6",
     "windups": "^1.2.1"
   },
   "devDependencies": {
