@@ -36,7 +36,9 @@ export function createMainInvokers<T extends IPCFactoryProps<T>>(props: T) {
   }, {}) as {
     [Property in RendererKeys]: (
       window: BrowserWindow,
-      arg: Parameters<Renderer[Property]>[1],
+      arg: Parameters<Renderer[Property]>[1] extends undefined
+        ? void
+        : Parameters<Renderer[Property]>[1],
       ...restOfArgs: any[]
     ) => ReturnType<Renderer[Property]>
   }
