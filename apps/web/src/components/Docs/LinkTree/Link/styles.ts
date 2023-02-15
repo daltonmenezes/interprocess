@@ -49,6 +49,8 @@ export const Button = styled('a', {
   },
 })
 
+type ButtonType = typeof Button
+
 export type ButtonProps = {
   href: string
-} & typeof Button['defaultProps']
+} & ButtonType['defaultProps']
