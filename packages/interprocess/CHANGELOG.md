@@ -1,5 +1,11 @@
 # interprocess
 
+## 0.2.5
+
+### Patch Changes
+
+- fix a typescript issue around empty invokers parameters
+
 ## 0.2.4
 
 ### Patch Changes
