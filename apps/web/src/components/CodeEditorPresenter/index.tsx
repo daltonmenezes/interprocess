@@ -3,7 +3,6 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import ScrollableContainer from 'react-indiana-drag-scroll'
 
-import { getPublicPath } from 'shared/utils'
 import { codes, tabs } from 'shared/constants'
 
 import { Button, CodeSandboxIcon, FileIcon, Separator } from 'components'
