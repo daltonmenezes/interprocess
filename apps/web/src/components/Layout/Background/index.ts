@@ -6,10 +6,12 @@ export const Background = styled('div', {
   left: 0,
   width: '100%',
   height: '100%',
-  backgroundImage: `url("${getPublicPath('/background.svg')}")`,
-  backgroundRepeat: 'no-repeat',
-  backgroundSize: '300%',
-  backgroundPosition: 'top center',
+  backgroundImage: `url("${getPublicPath(
+    '/pattern.svg'
+  )}"), url(${getPublicPath('/blur.jpg')})`,
+  backgroundRepeat: 'repeat, no-repeat',
+  backgroundSize: '30%, 200%',
+  backgroundPosition: 'top center, center center',
   zIndex: -1,
   position: 'fixed',
   overflowX: 'hidden',
