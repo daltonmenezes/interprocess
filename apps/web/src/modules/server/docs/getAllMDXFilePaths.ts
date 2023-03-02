@@ -1,12 +1,14 @@
 import { readdir, stat } from 'node:fs/promises'
 import { resolve } from 'node:path'
 
+import normalize from 'normalize-path'
+
 export async function getAllMDXFilePaths(directory: string) {
   const filePaths: string[] = []
 
   async function getMDXFilePaths(directory: string) {
     for (const file of await readdir(directory)) {
-      const path = resolve(directory, file)
+      const path = normalize(resolve(directory, file))
       const isMDXFile = /\.mdx?$/.test(file)
       const isDirectory = (await stat(path))?.isDirectory()
 
