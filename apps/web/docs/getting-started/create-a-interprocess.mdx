@@ -1,6 +1,6 @@
 ---
 title: Create a interprocess
-order: 3
+order: 4
 ---
 
 # Create a interprocess
@@ -51,6 +51,10 @@ export const { ipcMain, ipcRenderer, exposeApiToGlobalWindow } =
 <br />
 
 On the **main process**:
+
+<br />
+
+> ⚠️ Don't forget to add `sandbox: false` to the BrowserWindow because it's required to load the preload script properly!
 
 <br />
 
