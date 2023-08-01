@@ -35,6 +35,11 @@
 - 🕸️ All edges connected (APIs to handle all processes)
 - 💖 `invoke` and `handle` methods in both processes with the same expected behavior
 
+# Requirements
+- Node.js >= 14.0.0
+- Electron >= 12.0.0
+- TypeScript >= 4.8.0
+
 # 💬 Installation
 In your terminal, run:
 ```bash
@@ -83,6 +88,8 @@ export const { ipcMain, ipcRenderer, exposeApiToGlobalWindow } =
 ```
 
 On the **main process**:
+
+> :warning: Don't forget to add `sandbox: false` to the BrowserWindow because it's required to load the preload script properly!
 
 ```ts
 import { BrowserWindow, app } from 'electron'
