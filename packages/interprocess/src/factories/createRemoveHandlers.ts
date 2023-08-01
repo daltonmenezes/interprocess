@@ -20,19 +20,22 @@ export function createRemoveHandlers<T extends IPCFactoryProps<T>>(props: T) {
     [Property in R]: () => void
   }
 
-  const mainRemove = Object.keys(props.main!).reduce((acc, currentChannel) => {
-    const ipcChannel = currentChannel as MainKeys
+  const mainRemove = Object.keys(props?.main! || {}).reduce(
+    (acc, currentChannel) => {
+      const ipcChannel = currentChannel as MainKeys
 
-    return {
-      ...acc,
+      return {
+        ...acc,
 
-      [ipcChannel]: () => {
-        ipcMain.removeHandler(ipcChannel)
-      },
-    }
-  }, {}) as RemoveHandlers<MainKeys>
+        [ipcChannel]: () => {
+          ipcMain.removeHandler(ipcChannel)
+        },
+      }
+    },
+    {}
+  ) as RemoveHandlers<MainKeys>
 
-  const rendererRemove = Object.keys(props.renderer!).reduce(
+  const rendererRemove = Object.keys(props?.renderer! || {}).reduce(
     (acc, currentChannel) => {
       const ipcChannel = currentChannel as RendererKeys
 

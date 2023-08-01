@@ -16,7 +16,7 @@ export function createMainInvokers<T extends IPCFactoryProps<T>>(props: T) {
 
   registerAvailableRendererIpcsSyncHandler()
 
-  const invokers = Object.keys(props.renderer!).reduce(
+  const invokers = Object.keys(props?.renderer! || {}).reduce(
     (acc, currentChannel) => {
       const ipcChannel = currentChannel as RendererKeys
 
