@@ -1,5 +1,13 @@
 # interprocess
 
+## 0.2.6
+
+### Patch Changes
+
+- fix: window.webContents.send to be catchable
+- fix: where main or renderer handlers declaration are omitted and thrown undefined
+- chore: docs and requirements
+
 ## 0.2.5
 
 ### Patch Changes
