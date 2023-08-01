@@ -7,33 +7,43 @@ import type {
   IPCFactoryProps,
 } from '../types'
 
+import { registerAvailableRendererIpcsSyncHandler } from '../ipcs/main'
+import { store } from '../store'
+
 export function createMainInvokers<T extends IPCFactoryProps<T>>(props: T) {
   type Renderer = IPCRenderer<typeof props['renderer']>
   type RendererKeys = ProcessKeys<Renderer>
 
-  const invokers = Object.keys(props.renderer!).reduce((acc, current) => {
-    return {
-      ...acc,
+  registerAvailableRendererIpcsSyncHandler()
 
-      [current as RendererKeys]: async (
-        window: BrowserWindow,
-        ...args: any[]
-      ) => {
-        return new Promise((resolve) => {
-          const listener = async function (_: any, ...args: any[]) {
-            const response = await args[0]
+  const invokers = Object.keys(props.renderer!).reduce(
+    (acc, currentChannel) => {
+      const ipcChannel = currentChannel as RendererKeys
 
-            resolve(response)
-            ipcMain.removeListener(current as string, listener)
-          }
+      return {
+        ...acc,
 
-          ipcMain.addListener(current as string, listener)
+        [ipcChannel]: async (window: BrowserWindow, ...args: any[]) => {
+          return new Promise((resolve, reject) => {
+            if (!store.main.availableRendererIpcChannels.has(ipcChannel)) {
+              return reject(`No handler registered for '${ipcChannel}'`)
+            }
 
-          window.webContents.send(current as string, ...args)
-        })
-      },
-    }
-  }, {}) as {
+            const listener = async function (_: any, ...args: any[]) {
+              const response = await args[0]
+
+              resolve(response)
+              ipcMain.removeListener(ipcChannel, listener)
+            }
+
+            ipcMain.addListener(ipcChannel, listener)
+            window.webContents.send(ipcChannel, ...args)
+          })
+        },
+      }
+    },
+    {}
+  ) as {
     [Property in RendererKeys]: (
       window: BrowserWindow,
       arg: Parameters<Renderer[Property]>[1] extends undefined

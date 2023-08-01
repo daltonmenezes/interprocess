@@ -7,6 +7,8 @@ import type {
   RendererHandler,
 } from '../types'
 
+import { IPC } from '../utils/ipcs'
+
 type RendererHandle<
   RendererKeys extends string,
   Renderer extends {
@@ -20,38 +22,49 @@ export function createRendererHandlers<T extends IPCFactoryProps<T>>(props: T) {
   type Renderer = IPCRenderer<typeof props['renderer']>
   type RendererKeys = ProcessKeys<Renderer>
 
-  const handlers = Object.keys(props.renderer!).reduce((acc, current) => {
-    const key = current as RendererKeys
+  const handlers = Object.keys(props.renderer!).reduce(
+    (acc, currentChannel) => {
+      const ipcChannel = currentChannel as RendererKeys
 
-    return {
-      ...acc,
+      return {
+        ...acc,
 
-      [key]: async (
-        listener?: RendererHandler<typeof key, Renderer[typeof key]>
-      ) => {
-        const registeredHandler = props['renderer']![key]
-        const providedHandler = listener as any
+        [ipcChannel]: async (
+          listener?: RendererHandler<
+            typeof ipcChannel,
+            Renderer[typeof ipcChannel]
+          >
+        ) => {
+          const registeredHandler = props['renderer']![ipcChannel]
+          const providedHandler = listener as any
 
-        return ipcRenderer.on(key as string, async function (_, ...args) {
-          let response
+          ipcRenderer.invoke(IPC.INTERNAL.SYNC_AVAILABLE_RENDERER_IPCS, {
+            type: 'add',
+            key: ipcChannel,
+          })
 
-          if (providedHandler) {
-            response = await providedHandler(
-              _,
-              { [key]: registeredHandler, data: args[0] },
-              ...args
-            )
-          }
+          return ipcRenderer.on(ipcChannel, async function (_, ...args) {
+            let response
 
-          if (!providedHandler && registeredHandler) {
-            response = await registeredHandler(_, args[0])
-          }
+            if (providedHandler) {
+              response = await providedHandler(
+                _,
+                { [ipcChannel]: registeredHandler, data: args[0] },
+                ...args
+              )
+            }
 
-          _.sender.send(key as string, response)
-        })
-      },
-    }
-  }, {} as RendererHandle<RendererKeys, Renderer>)
+            if (!providedHandler && registeredHandler) {
+              response = await registeredHandler(_, args[0])
+            }
+
+            _.sender.send(ipcChannel, response)
+          })
+        },
+      }
+    },
+    {} as RendererHandle<RendererKeys, Renderer>
+  )
 
   return handlers
 }

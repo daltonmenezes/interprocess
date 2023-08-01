@@ -2,6 +2,8 @@ export type IPCMainEvent = Electron.IpcMainInvokeEvent
 export type IPCRendererEvent = Electron.IpcRendererEvent
 export type BrowserWindow = Electron.BrowserWindow
 
+export type SyncAvailableIpcsOperation = 'add' | 'remove'
+
 export type IPCMain<T> = IPC<T, IPCMainEvent>
 export type IPCRenderer<T> = IPC<T, IPCRendererEvent>
 

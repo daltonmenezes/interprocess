@@ -20,23 +20,29 @@ export function createMainHandlers<T extends IPCFactoryProps<T>>(props: T) {
   type Main = IPCMain<typeof props['main']>
   type MainKeys = ProcessKeys<Main>
 
-  const handlers = Object.keys(props.main!).reduce((acc, current) => {
-    const key = current as MainKeys
+  const handlers = Object.keys(props.main!).reduce((acc, currentChannel) => {
+    const ipcChannel = currentChannel as MainKeys
 
     return {
       ...acc,
 
-      [key]: async (listener?: MainHandler<typeof key, Main[typeof key]>) => {
-        const ProvidedHandler = props['main']![key]
+      [ipcChannel]: async (
+        listener?: MainHandler<typeof ipcChannel, Main[typeof ipcChannel]>
+      ) => {
+        const ProvidedHandler = props['main']![ipcChannel]
 
         if (!listener && ProvidedHandler) {
-          return ipcMain.handle(key as string, ProvidedHandler)
+          return ipcMain.handle(ipcChannel, ProvidedHandler)
         }
 
-        return ipcMain.handle(key as string, (_, ...args) => {
+        return ipcMain.handle(ipcChannel, (_, ...args) => {
           const handler = listener as any
 
-          return handler(_, { [key]: ProvidedHandler, data: args[0] }, ...args)
+          return handler(
+            _,
+            { [ipcChannel]: ProvidedHandler, data: args[0] },
+            ...args
+          )
         })
       },
     }

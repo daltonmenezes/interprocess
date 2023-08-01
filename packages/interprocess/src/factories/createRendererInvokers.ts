@@ -6,12 +6,14 @@ export function createRendererInvokers<T extends IPCFactoryProps<T>>(props: T) {
   type Main = IPCMain<typeof props['main']>
   type MainKeys = ProcessKeys<Main>
 
-  const invokers = Object.keys(props.main!).reduce((acc, current) => {
+  const invokers = Object.keys(props.main!).reduce((acc, currentChannel) => {
+    const ipcChannel = currentChannel as MainKeys
+
     return {
       ...acc,
 
-      [current as MainKeys]: async (...args: any[]) => {
-        return ipcRenderer.invoke(current as string, ...args)
+      [ipcChannel]: async (...args: any[]) => {
+        return ipcRenderer.invoke(ipcChannel, ...args)
       },
     }
   }, {}) as {
