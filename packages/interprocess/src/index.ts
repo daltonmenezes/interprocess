@@ -1,2 +1,2 @@
-export { combineIpcs } from './utils'
+export { combineIpcs } from './utils/combineIpcs'
 export * from './factories'

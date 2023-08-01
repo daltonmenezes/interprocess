@@ -7,6 +7,8 @@ import type {
   IPCFactoryProps,
 } from '../types'
 
+import { IPC } from '../utils/ipcs'
+
 export function createRemoveHandlers<T extends IPCFactoryProps<T>>(props: T) {
   type Main = IPCMain<typeof props['main']>
   type MainKeys = ProcessKeys<Main>
@@ -18,32 +20,43 @@ export function createRemoveHandlers<T extends IPCFactoryProps<T>>(props: T) {
     [Property in R]: () => void
   }
 
-  const mainRemove = Object.keys(props.main!).reduce((acc, current) => {
+  const mainRemove = Object.keys(props.main!).reduce((acc, currentChannel) => {
+    const ipcChannel = currentChannel as MainKeys
+
     return {
       ...acc,
 
-      [current as MainKeys]: () => {
-        ipcMain.removeHandler(current as string)
+      [ipcChannel]: () => {
+        ipcMain.removeHandler(ipcChannel)
       },
     }
   }, {}) as RemoveHandlers<MainKeys>
 
-  const rendererRemove = Object.keys(props.renderer!).reduce((acc, current) => {
-    return {
-      ...acc,
+  const rendererRemove = Object.keys(props.renderer!).reduce(
+    (acc, currentChannel) => {
+      const ipcChannel = currentChannel as RendererKeys
 
-      [current as RendererKeys]: () => {
-        if (!props?.renderer?.[current as RendererKeys]) {
-          return
-        }
+      return {
+        ...acc,
 
-        ipcRenderer.removeListener(
-          current as string,
-          props.renderer[current as RendererKeys]!
-        )
-      },
-    }
-  }, {}) as RemoveHandlers<RendererKeys>
+        [ipcChannel]: () => {
+          if (!props?.renderer?.[ipcChannel]) {
+            return
+          }
+
+          ipcRenderer.removeListener(ipcChannel, props.renderer[ipcChannel]!)
+
+          delete props?.renderer?.[ipcChannel]
+
+          ipcRenderer.invoke(IPC.INTERNAL.SYNC_AVAILABLE_RENDERER_IPCS, {
+            type: 'remove',
+            key: ipcChannel,
+          })
+        },
+      }
+    },
+    {}
+  ) as RemoveHandlers<RendererKeys>
 
   return {
     mainRemove,
