@@ -22,7 +22,7 @@ export function createRendererHandlers<T extends IPCFactoryProps<T>>(props: T) {
   type Renderer = IPCRenderer<typeof props['renderer']>
   type RendererKeys = ProcessKeys<Renderer>
 
-  const handlers = Object.keys(props.renderer!).reduce(
+  const handlers = Object.keys(props?.renderer! || {}).reduce(
     (acc, currentChannel) => {
       const ipcChannel = currentChannel as RendererKeys
 
