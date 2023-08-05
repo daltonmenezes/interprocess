@@ -42,13 +42,18 @@
 
 # 💬 Installation
 In your terminal, run:
-```bash
-yarn add interprocess
-
-# OR
-
-npm i interprocess
-```
+- npm
+    ```bash
+    npm i interprocess
+    ```
+- pnpm
+    ```bash
+    pnpm i interprocess
+    ```
+- yarn
+    ```bash
+    yarn add interprocess
+    ```
 
 # 💬 Usage
 
