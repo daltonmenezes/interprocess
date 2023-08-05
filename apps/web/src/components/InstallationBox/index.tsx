@@ -1,5 +1,5 @@
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 
 import { queueTimeouts } from 'shared/utils'
 import { commands } from 'shared/constants'
@@ -7,6 +7,7 @@ import { commands } from 'shared/constants'
 import { Separator, CheckmarkIcon, ClipboardIcon, Spinner } from 'components'
 
 import { Button, PackageButton, PackageManagerList, ShellBox } from './styles'
+import { usePackageManagerSelection } from 'hooks'
 import { codeTheme } from 'styles'
 
 const clipboardStateIcons = {
@@ -18,14 +19,22 @@ const clipboardStateIcons = {
 type ClipboardStateKeys = keyof typeof clipboardStateIcons
 type PackageManagerOptions = keyof typeof commands
 
+const defaultActivePackageManager = 'yarn'
+
 export function InstallationBox() {
   const [clipboardState, setClipboardState] =
     useState<ClipboardStateKeys>('default')
 
-  const [packageManager, setPackageManager] =
-    useState<PackageManagerOptions>('yarn')
+  const { activePackageManager, updateActivePackageManager } =
+    usePackageManagerSelection<PackageManagerOptions>(
+      defaultActivePackageManager
+    )
 
-  const installCommand = commands[packageManager]
+  const installCommand = commands[activePackageManager]
+
+  const availablePackagesManagers = Object.keys(
+    commands
+  ) as PackageManagerOptions[]
 
   function copyToClipboard() {
     navigator.clipboard
@@ -45,34 +54,31 @@ export function InstallationBox() {
       )
   }
 
-  function handlePackageManagerSelection(
-    packageManager: PackageManagerOptions
-  ) {
-    setPackageManager(() => packageManager)
-  }
-
   return (
     <>
       <PackageManagerList>
-        <li>
-          <PackageButton
-            onClick={() => handlePackageManagerSelection('npm')}
-            active={packageManager === 'npm'}
-          >
-            npm
-          </PackageButton>
-        </li>
+        {availablePackagesManagers.map(
+          (packageManagerName, index, packageManagers) => {
+            const isLastItem = index === packageManagers.length - 1
 
-        <Separator aria-hidden />
+            return (
+              <Fragment key={packageManagerName}>
+                <li>
+                  <PackageButton
+                    active={packageManagerName === activePackageManager}
+                    onClick={() =>
+                      updateActivePackageManager(packageManagerName)
+                    }
+                  >
+                    {packageManagerName}
+                  </PackageButton>
+                </li>
 
-        <li>
-          <PackageButton
-            onClick={() => handlePackageManagerSelection('yarn')}
-            active={packageManager === 'yarn'}
-          >
-            yarn
-          </PackageButton>
-        </li>
+                {!isLastItem && <Separator aria-hidden />}
+              </Fragment>
+            )
+          }
+        )}
       </PackageManagerList>
 
       <ShellBox>
