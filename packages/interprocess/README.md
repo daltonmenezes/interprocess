@@ -141,7 +141,7 @@ handle.getPong()
 This is a simple way to work with interprocess, but there's a lot of more cool features you can take advantage, like overrides, code splitting, invoker's response (for renderer and main process 🎉) and more. See the [Knowledge section for more](#-knowledge)
 
 # 💬 Knowledge
-- [Docs](https://daltonmenezes.github.io/interprocess/docs/getting-started/overview)
+- [Docs](https://interprocess.daltonmenezes.com/docs/getting-started/overview)
 
 - Examples
   - [Executable](https://github.com/daltonmenezes/interprocess/tree/main/apps/desktop)

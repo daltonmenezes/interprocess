@@ -1,21 +1,25 @@
-const isProd = process.env.NODE_ENV === 'production'
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  basePath: isProd ? '/interprocess' : '',
-  assetPrefix: isProd ? '/interprocess/' : '',
-
-  publicRuntimeConfig: {
-    basePath: isProd ? '/interprocess' : '',
-    assetPrefix: isProd ? '/interprocess/' : '',
-  },
 
   experimental: {
     transpilePackages: ['interprocess'],
   },
 
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
+
+  rewrites() {
+    return [
+      {
+        source: '/docs/:path',
+        destination: '/docs/:path/index',
+      },
+      {
+        source: '/docs/:path*',
+        destination: '/docs/:path*',
+      },
+    ]
+  },
 
   redirects() {
     return [
